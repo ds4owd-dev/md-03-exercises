@@ -1,0 +1,22 @@
+---
+title: "Data transformation"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+
+sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
+
+```
+
+```{r}
+
+sanitation |> 
+  filter(year == max(year)) |> 
+  filter(residence == "national") |> 
+  group_by(name, iso3) |> 
+  summarise(sum = sum(percent, na.rm = TRUE))
+
+```
+
