@@ -138,6 +138,26 @@ The `mutate()` function adds new variables based on existing variables or extern
 ```{r}
 sanitation |> 
   mutate(prop = percent / 100)
+
+sanitation |> 
+  mutate(id = seq(1:n()))
+```
+
+### relocate()
+
+```{r}
+sanitation |> 
+  mutate(id = seq(1:n())) |> 
+  relocate(id)
+
+sanitation |> 
+  mutate(id = seq(1:n())) |> 
+  relocate(id, .before = name)
+
+sanitation |> 
+  mutate(id = seq(1:n())) 
+
+
 ```
 
 ### summarise()
