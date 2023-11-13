@@ -1,0 +1,115 @@
+---
+title: "Your turn: Data transformation"
+editor_options: 
+  chunk_output_type: console
+editor: visual
+---
+
+```{r}
+#| label: load-packages
+library(readr)
+library(dplyr)
+```
+
+## Import
+
+In this exercise we use data of the UNICEF/WHO Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene (WASH). The data is available at [https://washdata.org/data](https://washdata.org/data). 
+
+The data set `jmp_wld_sanitation_long` is available in the `data` folder of this repository. The data set is in long format and contains the following variables:
+
+- `name`: country name
+- `iso3`: ISO3 country code
+- `year`: year of observation
+- `region_sdg`: SDG region
+- `residence`: residence type (national, rural, urban)
+- `varname_short`: short variable name (JMP naming convention)
+- `varname_long`: long variable name (JMP naming convention)
+
+We use the `read_csv()` function to import the data set into R.
+
+```{r}
+sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
+```
+
+### Task 1.1
+
+1. Use the `glimpse()` function to get an overview of the data set.
+2. How many variables are in the data set?
+
+```{r}
+glimpse(sanitation)
+```
+
+## Transform
+
+### Task 2.1
+
+1. Use the `count()` function to identify how many SDG regions are included in the data set.
+
+```{r}
+sanitation |> 
+  count(region_sdg)
+```
+
+### Task 2.2
+
+1. Use the `count()` function to identify the levels in the varname_short variable.
+2. Which indicator in varname_long does san_od refer to?
+
+```{r}
+sanitation |> 
+  count(varname_short, varname_long)
+```
+
+### Task 2.3
+
+1. Use the `filter()` function to create a subset from the `sanitation` data containing national estimates for people with "no sanitation facilities" for the year 2020.
+
+2. Store the result as a new object in your environment with the name `sanitation_national_2020_od`.
+
+```{r}
+sanitation_national_2020_od <- sanitation |> 
+  filter(residence == "national", 
+         year == 2020,
+         varname_short == "san_od")
+
+```
+
+### Task 2.4
+
+1. Use the `sanitation_national_2020_od` data and the `count()` function to identify the number of countries with 0% for the indicator "no sanitation facilities" in 2020.
+
+```{r}
+sanitation_national_2020_od |> 
+  count(percent)
+```
+
+### Task 2.5
+
+1. How many countries in `sanitation_national_2020_od` data had no estimate for "no sanitation facilities" in 2020? Tipp: A country without an estimate has `NA` for the percent variable.
+
+```{r}
+sanitation_national_2020_od |> 
+  filter(is.na(percent))
+```
+
+### Task 2.6
+
+1. Use the `sanitation_national_2020_od` data in combination with `group_by()` and `summarise()` functions to calculate the mean, standard deviation and number of countries for the indicator "no sanitation facilities" in 2020.
+
+2. How did you treat the missing values for the percent variable in the calculation?
+
+```{r}
+
+sanitation_national_2020_od |> 
+  filter(!is.na(percent)) |>
+  group_by(region_sdg) |> 
+  summarise(
+    mean = mean(percent, na.rm = TRUE),
+    sd = sd(percent, na.rm = TRUE),
+    n = n()
+  )
+```
+
+
+

@@ -1,7 +1,8 @@
 ---
-title: "Your turn: Data transformation"
+title: "Your turn: Data transformation with dplyr"
 editor_options: 
   chunk_output_type: console
+editor: visual
 ---
 
 ```{r}
@@ -30,9 +31,9 @@ We use the `read_csv()` function to import the data set into R.
 sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
 ```
 
-### Your turn: filter()
+## Transform
 
-**Task 1**
+### Task 1.1
 
 1.  Use the `filter()` function to create a subset from the `sanitation` data containing national estimates for the year 2020.
 2.  Store the result as a new object in your environment with the name `sanitation_national_2020`
@@ -42,7 +43,7 @@ sanitation_national_2020 <- sanitation |>
   filter(residence == "national", year == 2020)
 ```
 
-**Task 2**
+### Task 1.2
 
 1. Use the `filter()` function to create a subset from the `sanitation` data containing urban and rural estimates for Nigeria.
 2. Store the result as a new object in your environment with the name `sanitation_nigeria_urban_rural`

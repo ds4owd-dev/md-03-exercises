@@ -1,10 +1,8 @@
 ---
-title: "Data transformation"
+title: "Data transformation with dplyr"
 editor_options: 
   chunk_output_type: console
-editor: 
-  markdown: 
-    wrap: 72
+editor: visual
 ---
 
 ```{r}
@@ -15,12 +13,9 @@ library(dplyr)
 
 ## Import
 
-In this exercise we use data of the UNICEF/WHO Joint Monitoring
-Programme (JMP) for Water Supply, Sanitation and Hygiene (WASH). The
-data is available at <https://washdata.org/data>.
+In this exercise we use data of the UNICEF/WHO Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene (WASH). The data is available at <https://washdata.org/data>.
 
-The data set is available in the `data` folder as a CSV file named
-`jmp_wld_sanitation_long.csv`.
+The data set is available in the `data` folder as a CSV file named `jmp_wld_sanitation_long.csv`.
 
 The data set contains the following variables:
 
@@ -48,9 +43,7 @@ glimpse(sanitation)
 
 ## Transform with dplyr
 
-The `dplyr` R Package aims to provide a function for each basic verb of
-data manipulation. These verbs can be organised into three categories
-based on the component of the dataset that they work with:
+The `dplyr` R Package aims to provide a function for each basic verb of data manipulation. These verbs can be organised into three categories based on the component of the dataset that they work with:
 
 -   Rows
 -   Columns
@@ -58,10 +51,7 @@ based on the component of the dataset that they work with:
 
 ### filter()
 
-The function `filter()` chooses rows based on column values. To use
-filtering effectively, you have to know how to select the observations
-that you want using the comparison operators. R provides the standard
-suite: \>, \>=, \<, \<=, != (not equal), and == (equal).
+The function `filter()` chooses rows based on column values. To use filtering effectively, you have to know how to select the observations that you want using the comparison operators. R provides the standard suite: \>, \>=, \<, \<=, != (not equal), and == (equal).
 
 ```{r}
 
@@ -143,8 +133,7 @@ sanitation |>
 
 ### mutate()
 
-The `mutate()` function adds new variables based on existing variables
-or external data.
+The `mutate()` function adds new variables based on existing variables or external data.
 
 ```{r}
 sanitation |> 
@@ -153,8 +142,7 @@ sanitation |>
 
 ### summarise()
 
-The `summarise()` function reduces multiple values down to a single
-summary.
+The `summarise()` function reduces multiple values down to a single summary.
 
 ```{r}
 
@@ -180,8 +168,7 @@ sanitation_national_2020_sm |>
 
 ### group_by()
 
-The `group_by()` function is used to group the data by one or more
-variables.
+The `group_by()` function is used to group the data by one or more variables.
 
 ```{r}
 
@@ -199,8 +186,7 @@ sanitation_national_2020_sm |>
 
 ### count()
 
-The `count()` function is a convenient wrapper for `group_by()` and
-`summarise(n = n())`. You can prepare ferquency tables with `count()`.
+The `count()` function is a convenient wrapper for `group_by()` and `summarise(n = n())`. You can prepare ferquency tables with `count()`.
 
 ```{r}
 
