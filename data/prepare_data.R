@@ -22,12 +22,13 @@ levels_varname_short <- c("san_sm", "san_bas", "san_lim", "san_unimp", "san_od")
 levels_varname_long <- c("safely managed sanitation services", 
                          "basic sanitation services", 
                          "limited sanitation services", 
-                         "unimproved sanitation services", 
+                         "unimproved sanitation facilities", 
                          "no sanitation facilities")
 ## transform data
 
 jmp_wld_sanitation_long <- jmp_wld_sanitation |> 
-  select(name:year, 
+  select(name:year,
+         region_sdg,
          starts_with("san_bas"),
          starts_with("san_lim"),
          starts_with("san_unimp"),
