@@ -1,0 +1,53 @@
+---
+title: "Your turn: Data transformation"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| label: load-packages
+library(readr)
+library(dplyr)
+```
+
+## Import
+
+In this exercise we use data of the UNICEF/WHO Joint Monitoring Programme (JMP) for Water Supply, Sanitation and Hygiene (WASH). The data is available at [https://washdata.org/data](https://washdata.org/data). 
+
+The data set `jmp_wld_sanitation_long` is available in the `data` folder of this repository. The data set is in long format and contains the following variables:
+
+- `name`: country name
+- `iso3`: ISO3 country code
+- `year`: year of observation
+- `region_sdg`: SDG region
+- `residence`: residence type (national, rural, urban)
+- `varname_short`: short variable name (JMP naming convention)
+- `varname_long`: long variable name (JMP naming convention)
+
+We use the `read_csv()` function to import the data set into R.
+
+```{r}
+sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
+```
+
+### Your turn: filter()
+
+**Task 1**
+
+1.  Use the `filter()` function to create a subset from the `sanitation` data containing national estimates for the year 2020.
+2.  Store the result as a new object in your environment with the name `sanitation_national_2020`
+
+```{r}
+sanitation_national_2020 <- sanitation |> 
+  filter(residence == "national", year == 2020)
+```
+
+**Task 2**
+
+1. Use the `filter()` function to create a subset from the `sanitation` data containing urban and rural estimates for Nigeria.
+2. Store the result as a new object in your environment with the name `sanitation_nigeria_urban_rural`
+
+```{r}
+sanitation_nigeria_urban_rural <- sanitation |> 
+  filter(name == "Nigeria", residence != "national")
+```

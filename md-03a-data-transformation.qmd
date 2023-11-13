@@ -2,21 +2,218 @@
 title: "Data transformation"
 editor_options: 
   chunk_output_type: console
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r}
+#| label: load-packages
+library(readr)
+library(dplyr)
+```
 
+## Import
+
+In this exercise we use data of the UNICEF/WHO Joint Monitoring
+Programme (JMP) for Water Supply, Sanitation and Hygiene (WASH). The
+data is available at <https://washdata.org/data>.
+
+The data set is available in the `data` folder as a CSV file named
+`jmp_wld_sanitation_long.csv`.
+
+The data set contains the following variables:
+
+-   `name`: country name
+-   `iso3`: ISO3 country code
+-   `year`: year of observation
+-   `region_sdg`: SDG region
+-   `residence`: residence type (national, rural, urban)
+-   `varname_short`: short variable name (JMP naming convention)
+-   `varname_long`: long variable name (JMP naming convention)
+
+We use the `read_csv()` function to import the data set into R.
+
+```{r}
 sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
 
 ```
 
+## Explore
+
+```{r}
+sanitation
+glimpse(sanitation)
+```
+
+## Transform with dplyr
+
+The `dplyr` R Package aims to provide a function for each basic verb of
+data manipulation. These verbs can be organised into three categories
+based on the component of the dataset that they work with:
+
+-   Rows
+-   Columns
+-   Groups of rows
+
+### filter()
+
+The function `filter()` chooses rows based on column values. To use
+filtering effectively, you have to know how to select the observations
+that you want using the comparison operators. R provides the standard
+suite: \>, \>=, \<, \<=, != (not equal), and == (equal).
+
 ```{r}
 
 sanitation |> 
-  filter(year == max(year)) |> 
-  filter(residence == "national") |> 
-  group_by(name, iso3) |> 
-  summarise(sum = sum(percent, na.rm = TRUE))
+  filter(residence == "national")
+
+sanitation |> 
+  filter(residence != "national")
+
+sanitation |> 
+  filter(residence == "national", iso3 == "SEN") 
+
+sanitation |> 
+  filter(iso3 %in% c("UGA", "GHA", "USA"))
+
+sanitation |> 
+  filter(percent > 80)
+
+sanitation |> 
+  filter(percent <= 5)
+
+sanitation |> 
+  filter(is.na(percent))
+
+sanitation |> 
+  filter(!is.na(percent))
 
 ```
 
+-   Keyboard shortcut for pipe operator: Ctrl / Cmd + Shift + M
+-   Keyboard shortcut for assignment operator: Alt + -
+
+**Storing a resulting dataframe as a new object**
+
+```{r}
+sanitation_national_2020_sm <- sanitation |> 
+  filter(residence == "national",
+         year == 2020,
+         varname_short == "san_sm")
+```
+
+### arrange()
+
+The function `arrange()` changes the order of the rows.
+
+```{r}
+
+sanitation_national_2020_sm |> 
+  arrange(percent)
+
+sanitation_national_2020_sm |> 
+  arrange(desc(percent))
+
+```
+
+### select()
+
+The `select()` function chooses columns based on their names.
+
+```{r}
+sanitation_national_2020_sm |> 
+  select(name, percent)
+
+sanitation_national_2020_sm |> 
+  select(-varname_short)
+
+sanitation_national_2020_sm |> 
+  select(name:region_sdg, percent)
+```
+
+### rename()
+
+The `rename()` function changes the names of variables.
+
+```{r}
+sanitation |> 
+  rename(country = name)
+```
+
+### mutate()
+
+The `mutate()` function adds new variables based on existing variables
+or external data.
+
+```{r}
+sanitation |> 
+  mutate(prop = percent / 100)
+```
+
+### summarise()
+
+The `summarise()` function reduces multiple values down to a single
+summary.
+
+```{r}
+
+sanitation_national_2020_sm |> 
+  summarise()
+
+sanitation_national_2020_sm |> 
+  summarise(mean_percent = mean(percent))
+
+sanitation_national_2020_sm |> 
+  summarise(mean_percent = mean(percent, na.rm = TRUE))
+
+sanitation_national_2020_sm |> 
+  summarise(n = n(),
+            mean_percent = mean(percent, na.rm = TRUE))
+
+sanitation_national_2020_sm |> 
+  filter(!is.na(percent)) |> 
+  summarise(n = n(),
+            mean_percent = mean(percent),
+            sd_percent = sd(percent))
+```
+
+### group_by()
+
+The `group_by()` function is used to group the data by one or more
+variables.
+
+```{r}
+
+sanitation_national_2020_sm |> 
+  filter(!is.na(percent)) |> 
+  group_by(region_sdg)
+
+sanitation_national_2020_sm |> 
+  filter(!is.na(percent)) |> 
+  group_by(region_sdg) |> 
+  summarise(n = n(),
+            mean_percent = mean(percent),
+            sd_percent = sd(percent))
+```
+
+### count()
+
+The `count()` function is a convenient wrapper for `group_by()` and
+`summarise(n = n())`. You can prepare ferquency tables with `count()`.
+
+```{r}
+
+sanitation |> 
+  count(region_sdg)
+
+sanitation |> 
+  count(varname_short)
+
+sanitation |> 
+  count(varname_long)
+
+sanitation |> 
+  count(varname_short, varname_long)
+
+```
