@@ -44,7 +44,7 @@ sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
 3.  How many variables are in the data set?
 
 ```{r}
-
+glimpse(sanitation)
 ```
 
 ## Transform
@@ -55,7 +55,8 @@ sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
 2.  How many SDG regions are in the data set?
 
 ```{r}
-
+sanitation |> 
+  count(region_sdg)
 ```
 
 ### Task 2.2
@@ -64,7 +65,8 @@ sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
 2.  Which indicator in varname_long does san_od refer to?
 
 ```{r}
-
+sanitation |> 
+  count(varname_short, varname_long)
 ```
 
 ### Task 2.3
@@ -74,6 +76,10 @@ sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
 2.  Store the result as a new object in your environment with the name `sanitation_national_2020_od`.
 
 ```{r}
+sanitation_national_2020_od <- sanitation |> 
+  filter(residence == "national", 
+         year == 2020,
+         varname_short == "san_od")
 
 ```
 
@@ -82,7 +88,8 @@ sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
 1.  Use the `sanitation_national_2020_od` data and the `count()` function to identify the number of countries with 0% for the indicator "no sanitation facilities" in 2020.
 
 ```{r}
-
+sanitation_national_2020_od |> 
+  count(percent)
 ```
 
 ### Task 2.5
@@ -90,7 +97,8 @@ sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
 1.  How many countries in `sanitation_national_2020_od` data had no estimate for "no sanitation facilities" in 2020? Tipp: A country without an estimate has `NA` for the percent variable.
 
 ```{r}
-
+sanitation_national_2020_od |> 
+  filter(is.na(percent))
 ```
 
 ### Task 2.6
@@ -101,6 +109,14 @@ sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
 
 ```{r}
 
+sanitation_national_2020_od |> 
+  filter(!is.na(percent)) |>
+  group_by(region_sdg) |> 
+  summarise(
+    mean = mean(percent, na.rm = TRUE),
+    sd = sd(percent, na.rm = TRUE),
+    n = n()
+  )
 ```
 
 ## Communicate
