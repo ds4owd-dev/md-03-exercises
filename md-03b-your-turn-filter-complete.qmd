@@ -84,3 +84,7 @@ ggplot(data = sanitation_nigeria_urban_rural,
   scale_color_colorblind() 
 
 ```
+
+## Communicate
+
+-   Let's render

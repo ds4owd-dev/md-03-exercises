@@ -74,3 +74,7 @@ sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
 
 
 ```
+
+## Communicate
+
+-   Let's render
