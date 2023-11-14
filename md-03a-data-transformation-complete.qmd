@@ -43,7 +43,8 @@ sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
 ## Explore
 
 ```{r}
-
+sanitation
+glimpse(sanitation)
 ```
 
 ## Transform with dplyr
@@ -60,6 +61,32 @@ The function `filter()` chooses rows based on column values. To use filtering ef
 
 ```{r}
 
+sanitation |> 
+  filter(residence == "national")
+
+sanitation |> 
+  filter(residence != "national")
+
+sanitation |> 
+  filter(residence == "national", iso3 == "SEN") 
+
+sanitation |> 
+  filter(iso3 == "UGA" | iso3 == "PER" | iso3 == "IND") 
+
+sanitation |> 
+  filter(iso3 %in% c("UGA", "PER", "IND"))
+
+sanitation |> 
+  filter(percent > 80)
+
+sanitation |> 
+  filter(percent <= 5)
+
+sanitation |> 
+  filter(is.na(percent))
+
+sanitation |> 
+  filter(!is.na(percent))
 
 ```
 
@@ -71,7 +98,10 @@ The function `filter()` chooses rows based on column values. To use filtering ef
 **Storing a resulting data frame as a new object**
 
 ```{r}
-
+sanitation_national_2020_sm <- sanitation |> 
+  filter(residence == "national",
+         year == 2020,
+         varname_short == "san_sm")
 ```
 
 ### arrange()
@@ -80,6 +110,12 @@ The function `arrange()` changes the order of the rows.
 
 ```{r}
 
+sanitation_national_2020_sm |> 
+  arrange(percent)
+
+sanitation_national_2020_sm |> 
+  arrange(desc(percent))
+
 ```
 
 ### select()
@@ -87,7 +123,14 @@ The function `arrange()` changes the order of the rows.
 The `select()` function chooses columns based on their names.
 
 ```{r}
+sanitation_national_2020_sm |> 
+  select(name, percent)
 
+sanitation_national_2020_sm |> 
+  select(-varname_short)
+
+sanitation_national_2020_sm |> 
+  select(name:region_sdg, percent)
 ```
 
 ### rename()
@@ -95,7 +138,8 @@ The `select()` function chooses columns based on their names.
 The `rename()` function changes the names of variables.
 
 ```{r}
-
+sanitation |> 
+  rename(country = name)
 ```
 
 ### mutate()
@@ -103,12 +147,23 @@ The `rename()` function changes the names of variables.
 The `mutate()` function adds new variables based on existing variables or external data.
 
 ```{r}
+sanitation |> 
+  mutate(prop = percent / 100)
 
+sanitation |> 
+  mutate(id = seq(1:n()))
 ```
 
 ### relocate()
 
 ```{r}
+sanitation |> 
+  mutate(id = 1:n()) |> 
+  relocate(id)
+
+sanitation |> 
+  mutate(id = 1:n()) |> 
+  relocate(id, .before = name)
 
 ```
 
@@ -118,7 +173,24 @@ The `summarise()` function reduces multiple values down to a single summary.
 
 ```{r}
 
+sanitation_national_2020_sm |> 
+  summarise()
 
+sanitation_national_2020_sm |> 
+  summarise(mean_percent = mean(percent))
+
+sanitation_national_2020_sm |> 
+  summarise(mean_percent = mean(percent, na.rm = TRUE))
+
+sanitation_national_2020_sm |> 
+  summarise(n = n(),
+            mean_percent = mean(percent, na.rm = TRUE))
+
+sanitation_national_2020_sm |> 
+  filter(!is.na(percent)) |> 
+  summarise(n = n(),
+            mean_percent = mean(percent),
+            sd_percent = sd(percent))
 ```
 
 ### group_by()
@@ -127,7 +199,21 @@ The `group_by()` function is used to group the data by one or more variables.
 
 ```{r}
 
+sanitation_national_2020_sm |> 
+  group_by(region_sdg)
 
+sanitation_national_2020_sm |> 
+  group_by(region_sdg) |> 
+  summarise(n = n(),
+            mean_percent = mean(percent),
+            sd_percent = sd(percent))
+
+sanitation_national_2020_sm |> 
+  filter(!is.na(percent)) |> 
+  group_by(region_sdg) |> 
+  summarise(n = n(),
+            mean_percent = mean(percent),
+            sd_percent = sd(percent))
 ```
 
 ### count()
@@ -136,6 +222,17 @@ The `count()` function is a convenient wrapper for `group_by()` and `summarise(n
 
 ```{r}
 
+sanitation |> 
+  count(region_sdg)
+
+sanitation |> 
+  count(varname_short)
+
+sanitation |> 
+  count(varname_long)
+
+sanitation |> 
+  count(varname_short, varname_long)
 
 ```
 
