@@ -48,7 +48,8 @@ sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
 3.  Store the result as a new object in your environment with the name `sanitation_national_2020`
 
 ```{r}
-
+sanitation_national_2020 <- sanitation |> 
+  filter(residence == "national", year == 2020)
 ```
 
 ### Task 1.2
@@ -57,7 +58,8 @@ sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
 2.  Store the result as a new object in your environment with the name `sanitation_nigeria_urban_rural`
 
 ```{r}
-
+sanitation_nigeria_urban_rural <- sanitation |> 
+  filter(name == "Nigeria", residence != "national")
 ```
 
 ### Task 1.3 (stretch goal)
@@ -71,6 +73,14 @@ sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
 4.  Change the colors using `scale_color_colorblind()`.
 
 ```{r}
-
+ggplot(data = sanitation_nigeria_urban_rural,
+       mapping = aes(x = year, 
+                     y = percent, 
+                     group = varname_short, 
+                     color = varname_short)) +
+  geom_point() +
+  geom_line() +
+  facet_wrap(~residence) +
+  scale_color_colorblind() 
 
 ```
