@@ -66,7 +66,7 @@ sanitation_nigeria_urban_rural <- sanitation |>
 
 1.  Use the `ggplot()` function to create a connected scatterplot with `geom_point()` and `geom_line()` for the data you created in Task 1.2.
 
-2.  Use the `aes()` function to map the year variable to the x-axis, the `percent` variable to the y-axis, and the `varname_short` variable to color and group aesthetic.
+2.  Use the `aes()` function to map the year variable to the x-axis, the `percent` variable to the y-axis, and the `varname_short` variable to color aesthetic.
 
 3.  Use `facet_wrap()` to create a separate plot urban and rural populations.
 
@@ -76,7 +76,6 @@ sanitation_nigeria_urban_rural <- sanitation |>
 ggplot(data = sanitation_nigeria_urban_rural,
        mapping = aes(x = year, 
                      y = percent, 
-                     group = varname_short, 
                      color = varname_short)) +
   geom_point() +
   geom_line() +
