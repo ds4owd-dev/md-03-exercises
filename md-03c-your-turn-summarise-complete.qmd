@@ -12,7 +12,6 @@ editor: visual
 ---
 
 ```{r}
-#| label: load-packages
 library(readr)
 library(dplyr)
 ```
