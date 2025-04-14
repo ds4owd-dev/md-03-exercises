@@ -12,7 +12,6 @@ editor: visual
 ---
 
 ```{r}
-#| label: load-packages
 library(readr)
 library(dplyr)
 ```
@@ -63,10 +62,9 @@ The function `filter()` chooses rows based on column values. To use filtering ef
 
 ```
 
--   Keyboard shortcut for vertical bar \| (OR) in US/CH is: Shift + / (Windows) and Option + / (Mac)
--   Keyboard shortcut for vertical bar \| (OR) in UK: It's complitcated
--   Keyboard shortcut for pipe operator: Ctrl / Cmd + Shift + M
--   Keyboard shortcut for assignment operator: Alt + -
+-   Keyboard shortcut for vertical bar `|` (OR) in US/CH is: Shift + / (Windows) and Option + / (Mac)
+-   Keyboard shortcut for pipe operator `|>` : Ctrl / Cmd + Shift + M
+-   Keyboard shortcut for assignment operator `<-` : Alt / Option + -
 
 **Storing a resulting data frame as a new object**
 

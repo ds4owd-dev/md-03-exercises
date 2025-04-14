@@ -12,7 +12,6 @@ editor: visual
 ---
 
 ```{r}
-#| label: load-packages
 library(readr)
 library(dplyr)
 library(ggplot2)
@@ -64,7 +63,7 @@ sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
 
 1.  Use the `ggplot()` function to create a connected scatterplot with `geom_point()` and `geom_line()` for the data you created in Task 1.2.
 
-2.  Use the `aes()` function to map the year variable to the x-axis, the `percent` variable to the y-axis, and the `varname_short` variable to color and group aesthetic.
+2.  Use the `aes()` function to map the year variable to the x-axis, the `percent` variable to the y-axis, and the `varname_short` variable to color aesthetic.
 
 3.  Use `facet_wrap()` to create a separate plot urban and rural populations.
 
