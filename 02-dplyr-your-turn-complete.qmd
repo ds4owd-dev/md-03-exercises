@@ -44,33 +44,62 @@ sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
 ### Task 1.1
 
 1.  Run all code chunks above.
-2.  Use the `filter()` function to create a subset from the `sanitation` data containing national estimates for the year 2020.
-3.  Store the result as a new object in your environment with the name `sanitation_national_2020`
+
+2.  Use the `filter()` function to create a subset from the `sanitation` data containing national estimates for the year 2020. Filter for rows where `residence` equals "national" and `year` equals 2020.
+
+3.  Run the code and observe the result in your the Console (bottom-left window).
 
 ```{r}
-sanitation_national_2020 <- sanitation |> 
+sanitation |>
+  filter(residence == "national", year == 2020)
+```
+
+4.  Write the code again, but now store the result as a new object in your environment with the name `sanitation_national_2020`.
+
+5.  Run the code and observe the result in your Environment (top-right window).
+
+```{r}
+sanitation_national_2020 <- sanitation |>
   filter(residence == "national", year == 2020)
 ```
 
 ### Task 1.2
 
-1.  Use the `filter()` function to create a subset from the `sanitation` data containing urban and rural estimates for Nigeria.
-2.  Store the result as a new object in your environment with the name `sanitation_nigeria_urban_rural`
+1.  Use the `filter()` function to create a subset from the `sanitation` data containing urban and rural estimates for Nigeria. Filter for rows where `name` equals "Nigeria" and `residence` is either "urban" or "rural".
+
+2.  Run the code and observe the result in your Console (bottom-left window).
 
 ```{r}
-sanitation_nigeria_urban_rural <- sanitation |> 
-  filter(name == "Nigeria", residence != "national")
+sanitation |>
+  filter(name == "Nigeria", residence %in% c("urban", "rural"))
+```
+
+3.  Write the code again, but now store the result as a new object in your environment with the name `sanitation_nigeria_urban_rural`.
+
+4.  Run the code and observe the result in your Environment (top-right window).
+
+```{r}
+sanitation_nigeria_urban_rural <- sanitation |>
+  filter(name == "Nigeria", residence %in% c("urban", "rural"))
 ```
 
 ### Task 1.3 (stretch goal)
 
-1.  Use the `ggplot()` function to create a connected scatterplot with `geom_point()` and `geom_line()` for the data you created in Task 1.2.
+1.  Start with `ggplot()` and use the `sanitation_nigeria_urban_rural` data from Task 1.2.
 
-2.  Use the `aes()` function to map the year variable to the x-axis, the `percent` variable to the y-axis, and the `varname_short` variable to color and group aesthetic.
+2.  Inside `ggplot()`, use `aes()` to map:
 
-3.  Use `facet_wrap()` to create a separate plot urban and rural populations.
+    -   `year` to the x-axis
+    -   `percent` to the y-axis
+    -   `varname_short` to both the color and group aesthetics
 
-4.  Change the colors using `scale_color_colorblind()`.
+3.  Add `geom_point()` to show data points.
+
+4.  Add `geom_line()` to connect the points for each sanitation type.
+
+5.  Use `facet_wrap(~ residence)` to create separate panels for urban and rural populations.
+
+6.  Add `scale_color_colorblind()` from the ggthemes package to use colorblind-friendly colors.
 
 ```{r}
 ggplot(data = sanitation_nigeria_urban_rural,
