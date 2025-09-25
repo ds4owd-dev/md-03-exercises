@@ -47,7 +47,7 @@ sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
 
 2.  Use the `filter()` function to create a subset from the `sanitation` data containing national estimates for the year 2020. Filter for rows where `residence` equals "national" and `year` equals 2020.
 
-3. Run the code and observe the result in your the Console (bottom-left window).
+3.  Run the code and observe the result in your the Console (bottom-left window).
 
 ```{r}
 
@@ -55,18 +55,17 @@ sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
 
 4.  Write the code again, but now store the result as a new object in your environment with the name `sanitation_national_2020`.
 
-5. Run the code and observe the result in your Environment (top-right window).
+5.  Run the code and observe the result in your Environment (top-right window).
 
 ```{r}
 
 ```
 
-
 ### Task 1.2
 
 1.  Use the `filter()` function to create a subset from the `sanitation` data containing urban and rural estimates for Nigeria. Filter for rows where `name` equals "Nigeria" and `residence` is either "urban" or "rural".
 
-2. Run the code and observe the result in your Console (bottom-left window).
+2.  Run the code and observe the result in your Console (bottom-left window).
 
 ```{r}
 
@@ -74,7 +73,7 @@ sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
 
 3.  Write the code again, but now store the result as a new object in your environment with the name `sanitation_nigeria_urban_rural`.
 
-4. Run the code and observe the result in your Environment (top-right window).
+4.  Run the code and observe the result in your Environment (top-right window).
 
 ```{r}
 
@@ -85,9 +84,10 @@ sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
 1.  Start with `ggplot()` and use the `sanitation_nigeria_urban_rural` data from Task 1.2.
 
 2.  Inside `ggplot()`, use `aes()` to map:
-    - `year` to the x-axis
-    - `percent` to the y-axis
-    - `varname_short` to both the color and group aesthetics
+
+    -   `year` to the x-axis
+    -   `percent` to the y-axis
+    -   `varname_short` to both the color and group aesthetics
 
 3.  Add `geom_point()` to show data points.
 
