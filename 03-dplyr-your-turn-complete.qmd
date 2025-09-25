@@ -85,11 +85,11 @@ sanitation_national_2020_od <- sanitation |>
 
 ### Task 2.4
 
-1.  Use the `sanitation_national_2020_od` data and the `count()` function to identify the number of countries with 0% for the indicator "no sanitation facilities" in 2020.
+1.  Use the `sanitation_national_2020_od` data and the function `filter()` to identify the number of countries with 0% for the indicator "no sanitation facilities" in 2020.
 
 ```{r}
 sanitation_national_2020_od |> 
-  count(percent)
+  filter(percent == 0) 
 ```
 
 ### Task 2.5

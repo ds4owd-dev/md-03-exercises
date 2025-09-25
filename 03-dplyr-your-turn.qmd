@@ -79,7 +79,7 @@ sanitation <- read_csv("data/jmp_wld_sanitation_long.csv")
 
 ### Task 2.4
 
-1.  Use the `sanitation_national_2020_od` data and the `count()` function to identify the number of countries with 0% for the indicator "no sanitation facilities" in 2020.
+1.  Use the `sanitation_national_2020_od` data and the function `filter()` to identify the number of countries with 0% for the indicator "no sanitation facilities" in 2020.
 
 ```{r}
 
